@@ -39,7 +39,7 @@ func main() {
 	r := gin.Default()
 	// Custom CORS configuration
 	corsConfig := cors.Config{
-		AllowOrigins:     []string{"http://localhost:5173"}, // Frontend adresini buraya yazın
+		AllowOrigins:     []string{"http://localhost"}, // Frontend adresini buraya yazın
 		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Length", "Content-Type", "Authorization"},
 		AllowCredentials: true,
