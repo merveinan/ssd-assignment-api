@@ -15,6 +15,7 @@ import (
 // @Produce json
 // @Success 200 {array} models.SpecificConfig
 // @Failure 500 {object} models.ErrorResponse
+// @Security BearerAuth
 // @Router /api/specific/all [get]
 func GetAllSpecificConfigs(service *services.SpecificConfigService) gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -35,6 +36,7 @@ func GetAllSpecificConfigs(service *services.SpecificConfigService) gin.HandlerF
 // @Param id path string true "Configuration ID"
 // @Success 200 {object} models.SpecificConfig
 // @Failure 404 {object} models.ErrorResponse
+// @Security BearerAuth
 // @Router /api/specific/{id} [get]
 func GetSpecificConfigByID(service *services.SpecificConfigService) gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -58,6 +60,7 @@ func GetSpecificConfigByID(service *services.SpecificConfigService) gin.HandlerF
 // @Param config body models.SpecificConfig true "Updated Configuration"
 // @Success 200 {object} models.SpecificConfig
 // @Failure 400 {object} models.ErrorResponse
+// @Security BearerAuth
 // @Router /api/specific/{id} [put]
 func UpdateSpecificConfig(service *services.SpecificConfigService) gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -84,6 +87,7 @@ func UpdateSpecificConfig(service *services.SpecificConfigService) gin.HandlerFu
 // @Param id path string true "Configuration ID"
 // @Success 200 {object} models.MessageResponse
 // @Failure 404 {object} models.ErrorResponse
+// @Security BearerAuth
 // @Router /api/specific/{id} [delete]
 func DeleteSpecificConfig(service *services.SpecificConfigService) gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -107,6 +111,7 @@ func DeleteSpecificConfig(service *services.SpecificConfigService) gin.HandlerFu
 // @Success 200 {object} map[string][]string
 // @Failure 404 {object} models.ErrorResponse
 // @Failure 500 {object} models.ErrorResponse
+// @Security BearerAuth
 // @Router /api/specific [get]
 func GetSpecificConfigs(service *services.SpecificConfigService) gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -150,6 +155,7 @@ func GetSpecificConfigs(service *services.SpecificConfigService) gin.HandlerFunc
 // @Success 201 {object} models.SpecificConfig
 // @Failure 400 {object} models.ErrorResponse
 // @Failure 500 {object} models.ErrorResponse
+// @Security BearerAuth
 // @Router /api/specific [post]
 func AddSpecificConfig(service *services.SpecificConfigService) gin.HandlerFunc {
 	return func(c *gin.Context) {

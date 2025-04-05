@@ -40,6 +40,7 @@ func GetAllConfigs(service *services.ConfigService) gin.HandlerFunc {
 // @Success 200 {object} models.Config
 // @Failure 404 {object} models.ErrorResponse
 // @Failure 500 {object} models.ErrorResponse
+// @Security BearerAuth
 // @Router /api/configuration/{id} [get]
 func GetConfigByID(service *services.ConfigService) gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -63,6 +64,7 @@ func GetConfigByID(service *services.ConfigService) gin.HandlerFunc {
 // @Success 201 {object} models.Config
 // @Failure 400 {object} models.ErrorResponse
 // @Failure 500 {object} models.ErrorResponse
+// @Security BearerAuth
 // @Router /api/configuration [post]
 func AddConfig(service *services.ConfigService) gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -101,6 +103,7 @@ func AddConfig(service *services.ConfigService) gin.HandlerFunc {
 // @Failure 400 {object} models.ErrorResponse
 // @Failure 404 {object} models.ErrorResponse
 // @Failure 500 {object} models.ErrorResponse
+// @Security BearerAuth
 // @Router /api/configuration/{id} [put]
 func UpdateConfig(service *services.ConfigService) gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -126,6 +129,7 @@ func UpdateConfig(service *services.ConfigService) gin.HandlerFunc {
 // @Success 200 {object} models.MessageResponse
 // @Failure 404 {object} models.ErrorResponse
 // @Failure 500 {object} models.ErrorResponse
+// @Security BearerAuth
 // @Router /api/configuration/{id} [delete]
 func DeleteConfig(service *services.ConfigService) gin.HandlerFunc {
 	return func(c *gin.Context) {
