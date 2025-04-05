@@ -26,7 +26,7 @@ A Go-based API for managing configurations with authentication using JWT tokens.
     go run main.go
 
 ### Swagger Documentation
-    http://localhost:8000/swagger
+    http://localhost:8000/swagger/index.html
     
 ### Deployment
 
