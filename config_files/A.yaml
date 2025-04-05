@@ -1,0 +1,14 @@
+id: "A"
+actions:
+  - type: remove
+    selector: ".old-header"
+  - type: replace
+    selector: ".hero h1"
+    newElement: "<h1 class='hero-title'>Vision Bridge AI Solutions</h1>"
+  - type: insert
+    position: after
+    target: ".hero"
+    newElement: "<div class='announcement'>🌟 New AI-Powered Features Available!</div>"
+  - type: alter
+    oldValue: "Transforming Businesses"
+    newValue: "Revolutionizing Enterprises"

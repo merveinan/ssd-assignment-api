@@ -1,0 +1,19 @@
+id: "C"
+actions:
+  - type: remove
+    selector: ".services-grid :nth-child(3)"
+  - type: replace
+    selector: ".services-section h2"
+    newElement: "<h2 class='section-title'>Our AI-Powered Solutions</h2>"
+  - type: insert
+    position: beforeend
+    target: ".services-grid"
+    newElement: |
+      <div class="service-card">
+        <div class="service-icon">🤖</div>
+        <h3 class="service-title">AI Consulting</h3>
+        <p class="service-description">Strategic guidance for AI implementation</p>
+      </div>
+  - type: alter
+    oldValue: "Business Automation"
+    newValue: "Intelligent Process Automation"

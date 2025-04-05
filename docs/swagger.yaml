@@ -1,0 +1,373 @@
+definitions:
+  models.Action:
+    properties:
+      newElement:
+        description: New HTML element (for replace)
+        type: string
+      newValue:
+        description: New value (for alter)
+        type: string
+      oldValue:
+        description: Old value (for alter)
+        type: string
+      position:
+        description: 'Position (for insert: before/after)'
+        type: string
+      selector:
+        description: CSS selector (for remove/replace)
+        type: string
+      target:
+        description: Target element (for insert)
+        type: string
+      type:
+        description: Action type (remove, replace, insert, alter)
+        type: string
+    type: object
+  models.Config:
+    properties:
+      actions:
+        items:
+          $ref: '#/definitions/models.Action'
+        type: array
+      id:
+        type: string
+    type: object
+  models.DataSource:
+    properties:
+      hosts:
+        additionalProperties:
+          items:
+            type: string
+          type: array
+        type: object
+      pages:
+        additionalProperties:
+          items:
+            type: string
+          type: array
+        type: object
+      urls:
+        additionalProperties:
+          items:
+            type: string
+          type: array
+        type: object
+    type: object
+  models.ErrorResponse:
+    properties:
+      error:
+        type: string
+    type: object
+  models.MessageResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  models.SpecificConfig:
+    properties:
+      datasource:
+        $ref: '#/definitions/models.DataSource'
+      id:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /api/configuration:
+    post:
+      consumes:
+      - application/json
+      description: Adds a new configuration to the system
+      parameters:
+      - description: Configuration
+        in: body
+        name: config
+        required: true
+        schema:
+          $ref: '#/definitions/models.Config'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Config'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Add a new configuration
+      tags:
+      - configuration
+  /api/configuration/{id}:
+    delete:
+      description: Deletes a specific configuration by ID
+      parameters:
+      - description: Configuration ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.MessageResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Delete a configuration
+      tags:
+      - configuration
+    get:
+      description: Retrieves a specific configuration by its ID
+      parameters:
+      - description: Configuration ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Config'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Get configuration by ID
+      tags:
+      - configuration
+    put:
+      consumes:
+      - application/json
+      description: Updates an existing configuration by ID
+      parameters:
+      - description: Configuration ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Updated configuration
+        in: body
+        name: config
+        required: true
+        schema:
+          $ref: '#/definitions/models.Config'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Config'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Update an existing configuration
+      tags:
+      - configuration
+  /api/configuration/all:
+    get:
+      description: Retrieves all configurations stored in memory
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Config'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Get all configurations
+      tags:
+      - configuration
+  /api/specific:
+    get:
+      description: Get configuration IDs based on host, url or page
+      parameters:
+      - description: Target host
+        in: query
+        name: host
+        type: string
+      - description: Target URL path
+        in: query
+        name: url
+        type: string
+      - description: Target page name
+        in: query
+        name: page
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              items:
+                type: string
+              type: array
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Get matching configurations
+      tags:
+      - specific
+    post:
+      consumes:
+      - application/json
+      description: Add a new specific configuration mapping
+      parameters:
+      - description: Specific Configuration
+        in: body
+        name: config
+        required: true
+        schema:
+          $ref: '#/definitions/models.SpecificConfig'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.SpecificConfig'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Add new specific configuration
+      tags:
+      - specific
+  /api/specific/{id}:
+    delete:
+      description: Deletes a specific configuration by ID
+      parameters:
+      - description: Configuration ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.MessageResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Delete specific configuration
+      tags:
+      - specific
+    get:
+      description: Retrieves a specific configuration by its ID
+      parameters:
+      - description: Configuration ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SpecificConfig'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Get specific configuration by ID
+      tags:
+      - specific
+    put:
+      consumes:
+      - application/json
+      description: Updates an existing specific configuration
+      parameters:
+      - description: Configuration ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Updated Configuration
+        in: body
+        name: config
+        required: true
+        schema:
+          $ref: '#/definitions/models.SpecificConfig'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SpecificConfig'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Update specific configuration
+      tags:
+      - specific
+  /api/specific/all:
+    get:
+      description: Retrieves all specific configurations
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.SpecificConfig'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Get all specific configurations
+      tags:
+      - specific
+swagger: "2.0"

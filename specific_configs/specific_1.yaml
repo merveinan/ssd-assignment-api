@@ -1,0 +1,20 @@
+id: specific_1
+datasource:
+  pages:
+    cart:
+    - A.yaml
+    - B.yaml
+    details:
+    - B.yaml
+    list:
+    - A.yaml
+  urls:
+    /orders:
+    - B.yaml
+    /products:
+    - A.yaml
+  hosts:
+    another.com:
+    - B.yaml
+    example.com:
+    - C.yaml

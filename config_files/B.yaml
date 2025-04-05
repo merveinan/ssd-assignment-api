@@ -1,0 +1,17 @@
+id: "B"
+actions:
+  - type: remove
+    selector: ".contact-info"
+  - type: replace
+    selector: ".contact-section h2"
+    newElement: "<h2 class='section-title'>Get Expert Consultation</h2>"
+  - type: insert
+    position: beforebegin
+    target: ".contact-form"
+    newElement: "<div class='form-note'>We'll respond within 24 hours</div>"
+  - type: alter
+    oldValue: "How can we help you?"
+    newValue: "Describe your AI challenge:"
+  - type: alter
+    oldValue: "Send Message"
+    newValue: "Request Consultation"
