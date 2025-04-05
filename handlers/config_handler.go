@@ -14,9 +14,11 @@ import (
 // @Summary Get all configurations
 // @Description Retrieves all configurations stored in memory
 // @Tags configuration
+// @Accept json
 // @Produce json
-// @Success 200 {array} models.Config
-// @Failure 500 {object} models.ErrorResponse
+// @Success 200 {array} models.Config "List of configurations"
+// @Failure 500 {object} models.ErrorResponse "Internal Server Error"
+// @Security BearerAuth
 // @Router /api/configuration/all [get]
 func GetAllConfigs(service *services.ConfigService) gin.HandlerFunc {
 	return func(c *gin.Context) {

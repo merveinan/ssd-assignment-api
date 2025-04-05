@@ -70,8 +70,20 @@ definitions:
       id:
         type: string
     type: object
+  models.User:
+    properties:
+      password:
+        example: password123
+        type: string
+      username:
+        example: johndoe
+        type: string
+    type: object
 info:
   contact: {}
+  description: A Go-based API for managing configurations with JWT authentication
+  title: SSD Assignment API
+  version: "1.0"
 paths:
   /api/configuration:
     post:
@@ -194,12 +206,14 @@ paths:
       - configuration
   /api/configuration/all:
     get:
+      consumes:
+      - application/json
       description: Retrieves all configurations stored in memory
       produces:
       - application/json
       responses:
         "200":
-          description: OK
+          description: List of configurations
           schema:
             items:
               $ref: '#/definitions/models.Config'
@@ -208,6 +222,8 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/models.ErrorResponse'
+      security:
+      - BearerAuth: []
       summary: Get all configurations
       tags:
       - configuration
@@ -370,4 +386,62 @@ paths:
       summary: Get all specific configurations
       tags:
       - specific
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: This endpoint allows an existing user to log in using their username
+        and password
+      parameters:
+      - description: User login info
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Login successful
+          schema:
+            type: string
+        "400":
+          description: Bad request
+          schema:
+            type: string
+      summary: Log in an existing user
+      tags:
+      - Auth
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      description: This endpoint registers a new user with username and password
+      parameters:
+      - description: User info
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User registered successfully
+          schema:
+            type: string
+        "400":
+          description: Bad request
+          schema:
+            type: string
+      summary: Register a new user
+      tags:
+      - Auth
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"
