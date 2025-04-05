@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - CONFIG_DIR=/app/config_files  # Set environment variable for config dir
+    volumes:
+      - ./config_files:/app/config_files  # Mount local config directory
+      - ./specific_configs:/app/specific_configs  # Mount local specific config directory (if needed)
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
